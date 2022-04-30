@@ -96,10 +96,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/raouldeheer/Heroes-and-Generals-community-project.git"
+    "url": "git+https://github.com/raouldeheer/hgdesktop.git"
   },
   "bugs": {
-    "url": "https://github.com/raouldeheer/Heroes-and-Generals-community-project/issues"
+    "url": "https://github.com/raouldeheer/hgdesktop/issues"
   },
-  "homepage": "https://github.com/raouldeheer/Heroes-and-Generals-community-project#readme"
+  "homepage": "https://github.com/raouldeheer/hgdesktop#readme"
 }

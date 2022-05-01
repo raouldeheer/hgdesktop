@@ -1,0 +1,6 @@
+syntax = "proto3";
+
+import "HnG_States.proto";
+import "statrequests.proto";
+import "netsysmessages.proto";
+import "Common.proto";

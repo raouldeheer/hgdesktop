@@ -1,11 +1,10 @@
 /* eslint-disable no-case-declarations */
 const electron = window.require("electron");
 import { useEffect, useState } from "react";
-import { GetMissionDetailsResponse, Armyresourcecategory } from "../map/mapInterfaces";
+import { GetMissionDetailsResponse, Armyresourcecategory, MissionStatus } from "../map/mapInterfaces";
 import { WarmapEventHandler } from "../warmapEventHandler";
 import Long from "long";
 import armyresourcecategory from "../data/armyresourcecategory.json";
-import { MissionStatus } from "hagcp-network-client/dist/protolinking/classKeys";
 
 const armyresourcecategorys = new Map<string, Armyresourcecategory>();
 armyresourcecategory.forEach(element => {

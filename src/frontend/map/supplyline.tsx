@@ -68,7 +68,7 @@ export default class Supplyline extends Component<SupplylineProps, SupplylineSta
         let color = "#888";
         if (this.state.supplylinestatusId && status)
             color = this.warmapEventHandler.lookupFactions
-                .get(status.factionid)?.color;
+                .get(status.factionid.toString())?.color;
 
         const battle = this.warmapEventHandler.GetBattle(this.state.battleId);
 
@@ -87,7 +87,7 @@ export default class Supplyline extends Component<SupplylineProps, SupplylineSta
                 perfectDrawEnabled={false}
             />
             {battle ? <Circle
-                key={battle.id}
+                key={battle.id.toString()}
                 x={this.posx1 + (this.posx2 - this.posx1) * Number(battle.position)}
                 y={this.posy1 + (this.posy2 - this.posy1) * Number(battle.position)}
                 radius={8}

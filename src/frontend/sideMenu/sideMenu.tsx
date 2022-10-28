@@ -47,9 +47,9 @@ const SideMenu = ({
     if (CommandNodeWarInstances) {
         items = Array.from(CommandNodeWarInstances.values())
             .map(element => {
-                const CommandNodeDefinition: CommandNodeDefinition = warmapEventHandler.datastore.GetData("CommandNodeDefinition", element.commandNodeDefinitionId);
+                const CommandNodeDefinition: CommandNodeDefinition = warmapEventHandler.datastore.GetData("CommandNodeDefinition", element.commandNodeDefinitionId.toString());
                 return CommandNodeDefinition?.ownerPlayerId == warmapEventHandler.user.id
-                    && CommandNodeDefinition?.generalCharacterId != "0"
+                    && CommandNodeDefinition?.generalCharacterId.toString() != "0"
                     && element.factionId == warmapEventHandler.user.factionid
                     ? {
                         CommandNodeDefinition,
@@ -58,12 +58,12 @@ const SideMenu = ({
             })
             .filter(e => e?.CommandNodeDefinition?.name)
             .sort((a, b) => a.CommandNodeDefinition.abbreviation.localeCompare(b.CommandNodeDefinition.abbreviation))
-            .map(element => <tr key={element.CommandNodeWarInstance.id}>
+            .map(element => <tr key={element.CommandNodeWarInstance.id.toString()}>
                 <td>{element.CommandNodeDefinition.abbreviation}</td>
                 <td>{element.CommandNodeWarInstance.morale}</td>
                 <td>{element.CommandNodeWarInstance.isDeployed == 0
                     ? "Not deployed"
-                    : warmapEventHandler.datastore.GetData("battlefield", element.CommandNodeWarInstance.mapEntityId)?.bftitle
+                    : warmapEventHandler.datastore.GetData("battlefield", element.CommandNodeWarInstance.mapEntityId.toString())?.bftitle
                     || element.CommandNodeWarInstance.mapEntityId}</td>
             </tr>);
     }

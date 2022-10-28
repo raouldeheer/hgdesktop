@@ -8,7 +8,7 @@ import armyresourcecategory from "../data/armyresourcecategory.json";
 
 const armyresourcecategorys = new Map<string, Armyresourcecategory>();
 armyresourcecategory.forEach(element => {
-    armyresourcecategorys.set(element.id, element);
+    armyresourcecategorys.set(element.id, element as unknown as Armyresourcecategory);
 });
 
 const wrapperStyling: React.CSSProperties = {
@@ -133,8 +133,8 @@ const BattlefieldInfoPopup = ({
                 playersContent = <>
                     <h2 style={{ marginBottom: 0 }}>Players</h2>
                     <div style={{ display: "flex" }}>
-                        {data?.factions?.map(value => <div style={{ minWidth: "50px" }} key={value.factionId}>
-                            <h3 style={{ marginBottom: 0 }}>{warmapEventHandler.GetFactionShort(value.factionId)} {value?.players?.length || 0}</h3>
+                        {data?.factions?.map(value => <div style={{ minWidth: "50px" }} key={value.factionId.toString()}>
+                            <h3 style={{ marginBottom: 0 }}>{warmapEventHandler.GetFactionShort(value.factionId.toString())} {value?.players?.length || 0}</h3>
                             {value?.players?.map(player => <p style={{ marginBottom: 0, marginTop: 0 }} key={player.gamerTag}>{player.gamerTag}</p>)}
                         </div>)}
                     </div>

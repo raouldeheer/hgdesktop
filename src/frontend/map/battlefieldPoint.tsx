@@ -61,7 +61,7 @@ export default class BattlefieldPoint extends Component<BattlefieldProps, Battle
         let color = "#888";
         if (this.state.battlefieldstatusId && status)
             color = this.warmapEventHandler.lookupFactions
-                .get(status.factionid)?.color;
+                .get(status.factionid.toString())?.color;
 
         const battle = this.warmapEventHandler.GetBattle(this.state.battleId);
 

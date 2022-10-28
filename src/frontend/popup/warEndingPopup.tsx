@@ -33,7 +33,7 @@ const WarEndingPopup = ({
     const getData = async () => {
         const result = await electron.ipcRenderer
             .invoke("query_war_catalogue_request", {
-                includeWarId: Long.fromString(war.sequelwarid)
+                includeWarId: Long.fromString(war.sequelwarid.toString())
             });
         console.log(result);
         setData(result); // TODO Make this popup work with everything.
@@ -41,7 +41,7 @@ const WarEndingPopup = ({
 
     function joinNext() {
         electron.ipcRenderer.send("join_war_request", {
-            warid: Long.fromString(war.sequelwarid),
+            warid: Long.fromString(war.sequelwarid.toString()),
             factionid: Long.ZERO,
             playedFirstBlood: 0,
         });

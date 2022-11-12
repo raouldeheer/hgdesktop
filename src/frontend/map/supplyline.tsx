@@ -4,7 +4,7 @@ import { WarmapEventHandler } from "../warmapEventHandler";
 import { supplylinestatus, supplyline } from "./mapInterfaces";
 
 interface SupplylineProps {
-    supplyline: supplyline;
+    id: string;
     warmapEventHandler: WarmapEventHandler;
 }
 
@@ -18,18 +18,15 @@ export default class Supplyline extends Component<SupplylineProps, SupplylineSta
         battleId: null,
         supplylinestatusId: null,
     };
-    posx1: number;
-    posy1: number;
-    posx2: number;
-    posy2: number;
+    supplyline: supplyline;
     warmapEventHandler: WarmapEventHandler;
 
     constructor(props: SupplylineProps) {
         super(props);
-        this.posx1 = props.supplyline.posx1;
-        this.posy1 = props.supplyline.posy1;
-        this.posx2 = props.supplyline.posx2;
-        this.posy2 = props.supplyline.posy2;
+        
+        this.supplyline = props.warmapEventHandler.supplylines.get(
+            this.props.id,
+        );
         this.warmapEventHandler = props.warmapEventHandler;
     }
 
@@ -48,13 +45,13 @@ export default class Supplyline extends Component<SupplylineProps, SupplylineSta
     };
 
     componentDidMount(): void {
-        this.warmapEventHandler.on(`supplyline${this.props.supplyline.id}`, this.statusCallback);
-        this.warmapEventHandler.on(`battlesetmapEntityId${this.props.supplyline.id}`, this.battleCallback);
+        this.warmapEventHandler.on(`supplyline${this.supplyline.id}`, this.statusCallback);
+        this.warmapEventHandler.on(`battlesetmapEntityId${this.supplyline.id}`, this.battleCallback);
     }
 
     componentWillUnmount(): void {
-        this.warmapEventHandler.removeListener(`supplyline${this.props.supplyline.id}`, this.statusCallback);
-        this.warmapEventHandler.removeListener(`battlesetmapEntityId${this.props.supplyline.id}`, this.battleCallback);
+        this.warmapEventHandler.removeListener(`supplyline${this.supplyline.id}`, this.statusCallback);
+        this.warmapEventHandler.removeListener(`battlesetmapEntityId${this.supplyline.id}`, this.battleCallback);
     }
 
     clicked = () => {
@@ -75,10 +72,10 @@ export default class Supplyline extends Component<SupplylineProps, SupplylineSta
         return <>
             <Line
                 points={[
-                    this.posx1,
-                    this.posy1,
-                    this.posx2,
-                    this.posy2
+                    this.supplyline.posx1,
+                    this.supplyline.posy1,
+                    this.supplyline.posx2,
+                    this.supplyline.posy2
                 ]}
                 stroke={color}
                 strokeWidth={8}
@@ -88,8 +85,8 @@ export default class Supplyline extends Component<SupplylineProps, SupplylineSta
             />
             {battle ? <Circle
                 key={battle.id.toString()}
-                x={this.posx1 + (this.posx2 - this.posx1) * Number(battle.position)}
-                y={this.posy1 + (this.posy2 - this.posy1) * Number(battle.position)}
+                x={this.supplyline.posx1 + (this.supplyline.posx2 - this.supplyline.posx1) * Number(battle.position)}
+                y={this.supplyline.posy1 + (this.supplyline.posy2 - this.supplyline.posy1) * Number(battle.position)}
                 radius={8}
                 fill="orange"
                 onClick={this.clicked}

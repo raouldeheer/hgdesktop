@@ -2,7 +2,6 @@ import BattlefieldPoint from "./battlefieldPoint";
 import { Stage, Layer } from "react-konva";
 import Supplyline from "./supplyline";
 import { WarmapEventHandler } from "../warmapEventHandler";
-import { useEffect } from "react";
 
 const MapSector = ({
     posx,
@@ -19,15 +18,10 @@ const MapSector = ({
     offsetx: number;
     offsety: number;
     index: number;
-    supsSectors: any[][];
-    bfsSectors: any[][];
+    supsSectors: string[];
+    bfsSectors: string[];
     warmapEventHandler: WarmapEventHandler;
 }): JSX.Element => {
-
-    useEffect(() => {
-        // effect
-    }, []);
-
     return <Stage style={{
         position: "absolute",
         top: `${offsety}px`,
@@ -36,14 +30,14 @@ const MapSector = ({
         height: `${posy}px`
     }} key={`sector${index}`} width={posx} height={posy} offsetX={offsetx} offsetY={offsety}>
         <Layer>
-            {supsSectors[index]?.map(element => <Supplyline
-                key={element.id}
-                supplyline={element}
+            {supsSectors.map(element => <Supplyline
+                key={element}
+                id={element}
                 warmapEventHandler={warmapEventHandler}
             />)}
-            {bfsSectors[index]?.map(element => <BattlefieldPoint
-                key={element.id}
-                battlefield={element}
+            {bfsSectors.map(element => <BattlefieldPoint
+                key={element}
+                id={element}
                 warmapEventHandler={warmapEventHandler}
             />)}
         </Layer>

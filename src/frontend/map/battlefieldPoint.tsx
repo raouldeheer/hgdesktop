@@ -4,7 +4,7 @@ import { WarmapEventHandler } from "../warmapEventHandler";
 import { Battlefield, battlefieldstatus } from "./mapInterfaces";
 
 interface BattlefieldProps {
-    battlefield: Battlefield;
+    id: string;
     warmapEventHandler: WarmapEventHandler;
 }
 
@@ -18,11 +18,15 @@ export default class BattlefieldPoint extends Component<BattlefieldProps, Battle
         battleId: null,
         battlefieldstatusId: null,
     };
+    battlefield: Battlefield;
     warmapEventHandler: WarmapEventHandler;
     readonly pointSize = 15;
 
     constructor(props: BattlefieldProps) {
         super(props);
+        this.battlefield = props.warmapEventHandler.battlefields.get(
+            this.props.id,
+        );
         this.warmapEventHandler = props.warmapEventHandler;
     }
 
@@ -41,13 +45,13 @@ export default class BattlefieldPoint extends Component<BattlefieldProps, Battle
     };
 
     componentDidMount(): void {
-        this.warmapEventHandler.on(`battlefield${this.props.battlefield.id}`, this.statusCallback);
-        this.warmapEventHandler.on(`battlesetmapEntityId${this.props.battlefield.id}`, this.battleCallback);
+        this.warmapEventHandler.on(`battlefield${this.battlefield.id}`, this.statusCallback);
+        this.warmapEventHandler.on(`battlesetmapEntityId${this.battlefield.id}`, this.battleCallback);
     }
 
     componentWillUnmount(): void {
-        this.warmapEventHandler.removeListener(`battlefield${this.props.battlefield.id}`, this.statusCallback);
-        this.warmapEventHandler.removeListener(`battlesetmapEntityId${this.props.battlefield.id}`, this.battleCallback);
+        this.warmapEventHandler.removeListener(`battlefield${this.battlefield.id}`, this.statusCallback);
+        this.warmapEventHandler.removeListener(`battlesetmapEntityId${this.battlefield.id}`, this.battleCallback);
     }
 
     clicked = () => {
@@ -67,8 +71,8 @@ export default class BattlefieldPoint extends Component<BattlefieldProps, Battle
 
         return <>
             <Circle
-                x={this.props.battlefield.posx}
-                y={this.props.battlefield.posy}
+                x={this.battlefield.posx}
+                y={this.battlefield.posy}
                 radius={this.pointSize}
                 stroke={battle ? "orange" : "black"}
                 strokeWidth={2}
@@ -77,9 +81,9 @@ export default class BattlefieldPoint extends Component<BattlefieldProps, Battle
                 transformsEnabled={"position"}
             />
             <Text
-                text={this.props.battlefield.bftitle}
-                x={this.props.battlefield.posx}
-                y={this.props.battlefield.posy + this.pointSize}
+                text={this.battlefield.bftitle}
+                x={this.battlefield.posx}
+                y={this.battlefield.posy + this.pointSize}
                 listening={false}
                 transformsEnabled={"position"}
             />

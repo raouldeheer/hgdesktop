@@ -1,8 +1,9 @@
 const electron = window.require("electron");
 import EventEmitter from "events";
 import { DataStore, IKeyValueChangeSetResult } from "hagcp-utils";
-import { battle, Player } from "./map/mapInterfaces";
+import { battle, Player, supplyline, Battlefield } from "./map/mapInterfaces";
 import battlefield from "hagcp-assets/json/battlefield.json";
+import supplylines from "hagcp-assets/json/supplyline.json";
 
 export class WarmapEventHandler extends EventEmitter {
     public readonly lookupFactions: Map<string, any>;
@@ -14,6 +15,8 @@ export class WarmapEventHandler extends EventEmitter {
     ]);
     public readonly datastore: DataStore;
     public user: Player;
+    public supplylines: Map<string, supplyline> = new Map(supplylines.map(e => [e.id, e]));
+    public battlefields: Map<string, Battlefield> = new Map(battlefield.map(e => [e.id, e]));
     constructor() {
         super();
         this.lookupFactions = new Map<string, any>();
